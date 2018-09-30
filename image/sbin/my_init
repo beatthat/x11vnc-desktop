@@ -1,4 +1,4 @@
-#!/usr/bin/python3 -u
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -394,14 +394,14 @@ parser.add_argument('--enable-insecure-key', dest='enable_insecure_key',
                     action='store_const', const=True, default=False,
                     help='Install the insecure SSH key')
 parser.add_argument('--skip-startup-files', dest='skip_startup_files',
-                    action='store_const', const=True, default=False,
+                    action='store_const', const=True, default=os.geteuid()!=0,
                     help='Skip running /etc/my_init.d/* and /etc/rc.local')
 parser.add_argument('--skip-runit', dest='skip_runit',
-                    action='store_const', const=True, default=False,
+                    action='store_const', const=True, default=True,
                     help='Do not run runit services')
-parser.add_argument('--no-kill-all-on-exit', dest='kill_all_on_exit',
-                    action='store_const', const=False, default=True,
-                    help='Don\'t kill all processes on the system upon exiting')
+parser.add_argument('--kill-all-on-exit', dest='kill_all_on_exit',
+                    action='store_const', const=False, default=os.geteuid()==0,
+                    help='Kill all processes on the system upon exiting')
 parser.add_argument('--quiet', dest='log_level',
                     action='store_const', const=LOG_LEVEL_WARN, default=LOG_LEVEL_INFO,
                     help='Only print warnings and errors')
@@ -409,11 +409,6 @@ args = parser.parse_args()
 log_level = args.log_level
 
 if os.geteuid():
-    args.enable_insecure_key = False
-    args.skip_startup_files = True
-    args.skip_runit = True
-    args.kill_all_on_exit = False
-
     # unset environment variable related to X11
     for var in ['XDG_RUNTIME_DIR', 'XAUTHORITY', 'SSH_AUTH_SOCK', 'GPG_AGENT_INFO']:
         if os.getenv(var) and os.environ[var].startswith('/run'):

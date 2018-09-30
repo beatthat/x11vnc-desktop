@@ -79,7 +79,8 @@ perl -i -p -e "s/Virtual \d+ \d+/Virtual $SCREEN_SIZE/" $HOME/.config/X11/xorg.c
 
 # Start Xorg
 mkdir -p $HOME/.log
-Xorg -noreset -logfile $HOME/.log/Xorg.log -config $HOME/.config/X11/xorg.conf :$DISP \
+Xorg -noreset +extension GLX +extension RANDR +extension RENDER \
+    -logfile $HOME/.log/Xorg.log -config $HOME/.config/X11/xorg.conf :$DISP \
     2> $HOME/.log/Xorg_err.log &
 XORG_PID=$!
 sleep 0.1
@@ -94,8 +95,13 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     eval `ssh-agent -s` > /dev/null
 fi
 
-/usr/bin/lxsession -s LXDE -e LXDE > $HOME/.log/lxsession.log 2>&1 &
-LXSESSION_PID=$!
+if [ -f /usr/bin/startlxqt ]; then
+    /usr/bin/startlxqt > $HOME/.log/lxsession.log 2>&1 &
+    LXSESSION_PID=$!
+else
+    /usr/bin/lxsession -s LXDE -e LXDE > $HOME/.log/lxsession.log 2>&1 &
+    LXSESSION_PID=$!
+fi
 
 # startup x11vnc with a new password
 export VNCPASS=`openssl rand -base64 6 | sed 's/\//-/'`

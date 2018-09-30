@@ -277,7 +277,7 @@ if __name__ == "__main__":
                                             '-q']).find(img) >= 0:
             subprocess.Popen(["docker", "rmi", "-f", img.decode('utf-8')[:-1]])
 
-    docker_user = "ubuntu"
+    docker_user = "docker"
     docker_home = "/home/" + docker_user
 
     if args.reset:
