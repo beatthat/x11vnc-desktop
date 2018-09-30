@@ -21,6 +21,7 @@ RUN yum install -y epel-release && \
         vim \
         psmisc \
         sudo tcsh zsh \
+        man-pages man \
         which bsdtar curl wget \
         gcc libgomp perl automake autoconf cmake \
         net-tools openssh openssh-server git \
@@ -29,8 +30,7 @@ RUN yum install -y epel-release && \
         python tkinter \
         \
         xorg-x11-drv-dummy xterm x11vnc openbox \
-        lxqt-common lxqt-config lxqt-globalkeys \
-        lxqt-notificationd lxqt-openssh-askpass \
+        lxqt-globalkeys lxqt-openssh-askpass \
         lxqt-panel lxqt-qtplugin lxqt-runner lxqt-session \
         pcmanfm-qt qterminal-qt5 \
         \
