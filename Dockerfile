@@ -16,8 +16,7 @@ ARG DOCKER_TIMEZONE=America/New_York
 WORKDIR /tmp
 
 # Install some required system tools and packages for X Windows and ssh
-RUN yum clean all && \
-    yum install -y epel-release && \
+RUN yum install -y epel-release && \
     yum install -y \
         vim \
         psmisc \
