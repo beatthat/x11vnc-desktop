@@ -21,7 +21,6 @@ RUN yum install -y epel-release && \
         vim \
         psmisc \
         sudo tcsh zsh \
-        man-pages man \
         which bsdtar curl wget \
         gcc libgomp perl automake autoconf cmake \
         net-tools openssh openssh-server git \
@@ -48,11 +47,6 @@ RUN yum install -y epel-release && \
         s/#?PermitEmptyPasswords\s+\w+/PermitEmptyPasswords no/g' \
         /etc/ssh/sshd_config && \
     rm -rf /var/cache/yum /tmp/* /var/tmp/*
-
-#        libibverbs \
-#        centos-release-scl \
-#        rh-python36 \
-# scl enable rh-python36 bash
 
 # Install websokify and noVNC
 RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
@@ -114,7 +108,9 @@ RUN mkdir -p $DOCKER_HOME/.config/mozilla && \
     mkdir -p $DOCKER_HOME/shared && \
     mkdir -p $DOCKER_HOME/.ssh && \
     mkdir -p $DOCKER_HOME/.log && touch $DOCKER_HOME/.log/vnc.log && \
-    chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME
+    chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME && \
+    chmod -R go+r $DOCKER_HOME && \
+    chmod go+x `find $DOCKER_HOME -type d`
 
 WORKDIR $DOCKER_HOME
 

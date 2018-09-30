@@ -4,21 +4,6 @@
 # You can overwrite its behavior by creating a file
 # ~/.config/init_vnc (not recommended)
 
-move_to_config()
-{
-  if [ -n "$1" ]; then
-      # Config the module by copying defaults into $HOME/.config
-      if [ ! -e $DOCKER_HOME/.config/$1 ]; then
-          mkdir -p $DOCKER_HOME/.config/$1
-          rsync -a $DOCKER_HOME/.$1/ $DOCKER_HOME/.config/$1
-      fi
-
-      # Link the files and directories back to home directory
-      rm -rf $DOCKER_HOME/.$1/*
-      ln -s -f $DOCKER_HOME/.config/$1/* $DOCKER_HOME/.$1
-  fi
-}
-
 # If running with a different HOME directory, copy configuration files
 if [ "$DOCKER_HOME" != "$HOME" ]; then
     rsync -au $DOCKER_HOME/.config/ $HOME/.config/
