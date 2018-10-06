@@ -85,11 +85,6 @@ Xorg -noreset +extension GLX +extension RANDR +extension RENDER \
 XORG_PID=$!
 sleep 0.1
 
-# startup lxsession with proper environment variables
-if [ $HOME/.zprofile ]; then
-   source $HOME/.zprofile
-fi
-
 # start ssh-agent if not set by caller and stop if automatically
 if [ -z "$SSH_AUTH_SOCK" ]; then
     eval `ssh-agent -s` > /dev/null

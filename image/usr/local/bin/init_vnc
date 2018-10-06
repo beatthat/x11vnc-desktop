@@ -1,19 +1,10 @@
 #!/bin/bash
 
 # This script is called before X11 starts.
-# You can overwrite its behavior by creating a file
-# ~/.config/init_vnc (not recommended)
 
 # If running with a different HOME directory, copy configuration files
 if [ "$DOCKER_HOME" != "$HOME" ]; then
-    rsync -au $DOCKER_HOME/.config/ $HOME/.config/
-    rsync -au $DOCKER_HOME/.zshrc $HOME/.zshrc
-    rsync -au $DOCKER_HOME/.zprofile $HOME/.zprofile
-    exit 0
-fi
-
-if [ -e $DOCKER_HOME/.config/init_vnc ]; then
-    bash $DOCKER_HOME/.config/init_vnc
+    rsync -aub $DOCKER_HOME/.config/ $HOME/.config/
     exit 0
 fi
 
@@ -33,7 +24,7 @@ ln -s -f .config/zsh/zsh_history $DOCKER_HOME/.zsh_history
 # Config git
 mkdir -p $DOCKER_HOME/.config/git
 if [ -e $DOCKER_HOME/.gitconfig_host ]; then
-    rsync -u $DOCKER_HOME/.gitconfig_host $DOCKER_HOME/.config/gitconfig
+    rsync -ub $DOCKER_HOME/.gitconfig_host $DOCKER_HOME/.config/gitconfig
 elif [ ! -e $DOCKER_HOME/.config/gitconfig ]; then
   touch $DOCKER_HOME/.config/gitconfig
 fi
