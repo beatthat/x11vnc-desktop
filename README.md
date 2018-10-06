@@ -5,7 +5,6 @@ This is a Docker image for CentOS 7.5 with X11 and VNC. It is similar to
 
  - VNC is protected by a unique random password for each session
  - Desktop runs in a standard user account instead of the root account
- - Supports dynamic resizing of the desktop and 24-bit true color
  - Supports CentOS 7.5 with LXQT desktop manager
  - Auto-starts in full-size resolution and auto-launches web-browser
  - Automatically shares the current work directory from host to Docker image
@@ -62,12 +61,6 @@ For additional command-line options, use the command
 ```
 python x11vnc_desktop.py -h
 ```
-
-To resize the desktop, start `lxterminal` within the desktop and run the `xrandr` command with the `-s <width>x<height>` option. For example, use the command
-```
-xrandr -s 1920x1080
-```
-to change the desktop size to 1920x1080.
 
 ### Building Your Own Images
 
