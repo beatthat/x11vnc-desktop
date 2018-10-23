@@ -2,7 +2,7 @@
 
 """
 Launch a Docker image with Ubuntu and LXDE window manager, and
-automatically open up the URL in the default web browser. 
+automatically open up the URL in the default web browser.
 It also sets up port forwarding for ssh.
 """
 
@@ -15,9 +15,9 @@ import subprocess
 import time
 import os
 
-owner = "x11vnc"
+owner = "vnect-x11"
 proj = os.path.basename(sys.argv[0]).split('_')[0]
-image = owner + "/desktop"
+image = owner #+ "/desktop"
 tag = "latest"
 projdir = "project"
 workdir = "project"
@@ -369,10 +369,14 @@ if __name__ == "__main__":
         stderr_write("Error: Could not find a free port.\n")
         sys.exit(-1)
 
-    cmd = ["docker", "run", "-d", rmflag, "--name", container,
-                     "--shm-size", "2g", "-p", port_http + ":6080",
-                     "-p", port_vnc + ":5900"] + \
-        envs + volumes + devices + args.args.split() + \
+    cmd = ["docker", "run",
+        "--runtime", "nvidia",
+         "-d", rmflag,
+          "--name", container,
+          "--shm-size", "2g",
+          "-p", port_http + ":6080",
+          "-p", port_vnc + ":5900"] + \
+          envs + volumes + devices + args.args.split() + \
         ['--security-opt', 'seccomp=unconfined', '--cap-add=SYS_PTRACE',
          args.image, "startvnc.sh >> " +
          docker_home + "/.log/vnc.log"]

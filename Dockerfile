@@ -7,7 +7,7 @@
 # Authors:
 # Xiangmin Jiao <xmjiao@gmail.com>
 
-FROM ubuntu:17.10
+FROM vnect:latest
 LABEL maintainer Xiangmin Jiao <xmjiao@gmail.com>
 
 ARG DOCKER_LANG=en_US
@@ -42,7 +42,7 @@ RUN apt-get update && \
         rsync \
         bsdtar \
         net-tools \
-        gpg-agent \
+        gnupg-agent \
         inetutils-ping \
         csh \
         tcsh \
